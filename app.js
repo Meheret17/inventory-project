@@ -1,8 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const { DB_URI } = require("./config");
-const Product = require("./models/product");
-const User = require("./models/user");
+const Product = require("./models/Product");
+const User = require("./models/User");
 const cors = require("cors");
 const app = express();
 

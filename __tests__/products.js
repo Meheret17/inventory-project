@@ -30,7 +30,6 @@ describe("Test /api/products", () => {
   test("update a product", async () => {
     const response = await request(app).post("/api/products").send(product);
     const p = response.body;
-    console.log(p);
 
     await request(app)
       .put(`/api/products/${p.id}`)
