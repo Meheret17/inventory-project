@@ -28,11 +28,13 @@ exports.createUser = async (req, res, next) => {
         message: `Full name is required and must contain at least two words`
       })
     }
-    const user = await User.create({ name, email, password: hashedPassword }).select("-password")
+    const user = User({ name, email, password })
+    const u = await user.save()
+    const id = u.id
     
     return res.status(201).json({
       success: true,
-      user
+      name, email, id
     })
   } catch (err) {
     return res.status(500).json({
@@ -40,4 +42,27 @@ exports.createUser = async (req, res, next) => {
       message: err.message
     })
   }
+}
+exports.getUserById = async (req, res, next)=>{
+    try{
+        const {id} = req.params
+        const user = await User.findById(id).select("-password")
+        console.log(user)
+        if(!user){
+            return res.status(404).json({
+                success: false,
+                message: 'user is not found'
+            })
+        }else{
+            return res.status(200).json({
+                success: true,
+                user
+            })
+        }
+    }catch(err){
+        return res.status(500).json({
+            success: false,
+            message: err.message
+        })
+    }
 }

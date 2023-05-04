@@ -1,9 +1,10 @@
 const express = require('express')
-const hasher = require('../middlewares/hasher')
-const createUser = require('../controllers/users')
+const {hashPassword} = require('../middlewares/hasher')
+const {createUser, getUserById} = require('../controllers/users')
 
 const userRouter = express.Router()
 
-userRouter.post('/', hasher, createUser)
+userRouter.post('/', hashPassword, createUser)
+userRouter.get('/:id', getUserById)
 
 module.exports = userRouter
